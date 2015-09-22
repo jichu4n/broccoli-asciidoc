@@ -1,0 +1,28 @@
+{
+  "name": "broccoli-asciidoc",
+  "description": "An AsciiDoc filter for Broccoli using asciidoctor.js.",
+  "version": "0.0.1",
+  "author": "Chuan Ji <ji@chu4n.com>",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jichu4n/broccoli-asciidoc"
+  },
+  "keywords": [
+    "broccoli-plugin",
+    "asciidoc",
+    "asciidoctor"
+  ],
+  "dependencies": {
+    "broccoli-filter": "^0.1.6",
+    "asciidoctor.js": "^1.5.1",
+    "rsvp": "^3.0.18"
+  },
+  "devDependencies": {
+    "jshint": "~2.5.0"
+  },
+  "scripts": {
+    "test": "jshint *.js"
+  }
+}
