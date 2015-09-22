@@ -22,12 +22,12 @@ var Filter = require('broccoli-filter');
 var RSVP = require('rsvp');
 var asciidoctor = require('asciidoctor.js')();
 
-function AsciiDocFilter(inputTree, options) {
+function AsciiDocFilter(inputNode, options) {
   if (!(this instanceof AsciiDocFilter)) {
-    return new AsciiDocFilter(inputTree, options);
+    return new AsciiDocFilter(inputNode, options);
   }
 
-  this.inputTree = inputTree;
+  Filter.call(this, inputNode);
   this.asciidoctorOptions = asciidoctor.Opal.hash(options || {});
 }
 

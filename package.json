@@ -15,12 +15,12 @@
     "asciidoctor"
   ],
   "dependencies": {
-    "broccoli-filter": "^0.1.6",
+    "broccoli-filter": "^1.2.2",
     "asciidoctor.js": "^1.5.1",
     "rsvp": "^3.0.18"
   },
   "devDependencies": {
-    "jshint": "~2.5.0"
+    "jshint": "~2.8.0"
   },
   "scripts": {
     "test": "jshint *.js"
