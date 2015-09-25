@@ -29,6 +29,7 @@ function AsciiDocFilter(inputNode, options) {
 
   Filter.call(this, inputNode);
   this.asciidoctorOptions = asciidoctor.Opal.hash(options || {});
+  this.asciidoctorProcessor = asciidoctor.Asciidoctor(true);
 }
 
 AsciiDocFilter.prototype = Object.create(Filter.prototype);
@@ -38,9 +39,8 @@ AsciiDocFilter.prototype.extensions = ['asciidoc', 'adoc', 'asc'];
 AsciiDocFilter.prototype.targetExtension = 'html';
 
 AsciiDocFilter.prototype.processString = function (asciidocString) {
-  var asciidoctorProcessor = asciidoctor.Asciidoctor(true);
   return new RSVP.Promise(function(resolve) {
-    var html = asciidoctorProcessor.$convert(
+    var html = this.asciidoctorProcessor.$convert(
       asciidocString, this.asciidoctorOptions);
     resolve(html);
   }.bind(this));
