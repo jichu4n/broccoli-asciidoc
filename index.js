@@ -16,20 +16,17 @@
  *                                                                           *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-'use strict';
-
 var Filter = require('broccoli-filter');
 var RSVP = require('rsvp');
-var asciidoctor = require('asciidoctor.js')();
+var asciidoctorModule = require('asciidoctor.js');
 
 function AsciiDocFilter(inputNode, options) {
   if (!(this instanceof AsciiDocFilter)) {
     return new AsciiDocFilter(inputNode, options);
   }
 
-  Filter.call(this, inputNode);
-  this.asciidoctorOptions = asciidoctor.Opal.hash(options || {});
-  this.asciidoctorProcessor = asciidoctor.Asciidoctor(true);
+  Filter.call(this, inputNode, options);
+  this.initialized = false;
 }
 
 AsciiDocFilter.prototype = Object.create(Filter.prototype);
@@ -38,7 +35,13 @@ AsciiDocFilter.prototype.constructor = AsciiDocFilter;
 AsciiDocFilter.prototype.extensions = ['asciidoc', 'adoc', 'asc'];
 AsciiDocFilter.prototype.targetExtension = 'html';
 
-AsciiDocFilter.prototype.processString = function (asciidocString) {
+AsciiDocFilter.prototype.processString = function(asciidocString) {
+  if (!this.initialized) {
+    var asciidoctor = asciidoctorModule();
+    this.asciidoctorOptions = asciidoctor.Opal.hash(this.options || {});
+    this.asciidoctorProcessor = asciidoctor.Asciidoctor(true);
+    this.initialized = true;
+  }
   return new RSVP.Promise(function(resolve) {
     var html = this.asciidoctorProcessor.$convert(
       asciidocString, this.asciidoctorOptions);
