@@ -18,7 +18,7 @@
 
 var Filter = require('broccoli-filter');
 var RSVP = require('rsvp');
-var asciidoctorModule = require('asciidoctor.js');
+var asciidoctor = require('asciidoctor.js')();
 
 function AsciiDocFilter(inputNode, options) {
   if (!(this instanceof AsciiDocFilter)) {
@@ -26,7 +26,9 @@ function AsciiDocFilter(inputNode, options) {
   }
 
   Filter.call(this, inputNode, options);
-  this.initialized = false;
+
+  this.asciidoctorProcessor = asciidoctor.Asciidoctor(true);
+  this.asciidoctorOptions = asciidoctor.Opal.hash(options || {});
 }
 
 AsciiDocFilter.prototype = Object.create(Filter.prototype);
@@ -36,16 +38,9 @@ AsciiDocFilter.prototype.extensions = ['asciidoc', 'adoc', 'asc'];
 AsciiDocFilter.prototype.targetExtension = 'html';
 
 AsciiDocFilter.prototype.processString = function(asciidocString) {
-  if (!this.initialized) {
-    var asciidoctor = asciidoctorModule();
-    this.asciidoctorOptions = asciidoctor.Opal.hash(this.options || {});
-    this.asciidoctorProcessor = asciidoctor.Asciidoctor(true);
-    this.initialized = true;
-  }
   return new RSVP.Promise(function(resolve) {
-    var html = this.asciidoctorProcessor.$convert(
-      asciidocString, this.asciidoctorOptions);
-    resolve(html);
+    resolve(this.asciidoctorProcessor.$convert(
+      asciidocString, this.asciidoctorOptions));
   }.bind(this));
 };
 

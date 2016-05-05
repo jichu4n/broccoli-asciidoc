@@ -1,7 +1,7 @@
 {
   "name": "broccoli-asciidoc",
   "description": "An AsciiDoc filter for Broccoli using asciidoctor.js.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Chuan Ji <ji@chu4n.com>",
   "main": "index.js",
   "license": "Apache-2.0",
@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "broccoli-filter": "^1.2.3",
-    "asciidoctor.js": "^1.5.5-1",
+    "asciidoctor.js": "1.5.2",
     "rsvp": "^3.0.18"
   },
   "devDependencies": {
